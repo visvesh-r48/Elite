@@ -1,6 +1,6 @@
 import mysql.connector
 
-
+#Connect to SQL
 mydb = mysql.connector.connect(host = "localhost", user = "root", password = "My$QLMy$QL1!", database = "bank")
 
 cursor = mydb.cursor()
@@ -18,31 +18,35 @@ CREATE TABLE accounts (
 
 #mydb.commit()
 
+#Create lists to store current account data
 data = []
 
 names = []
 pins = []
 balances = []
 
-
+#Add data to names
 column_name = "name"
 cursor.execute("SELECT " + column_name + " FROM accounts")
 rows = cursor.fetchall()
 for row in rows:
     names.append(row[0].lower())
 
+#Add data to pins
 column_pin = "pin"
 cursor.execute("SELECT " + column_pin + " FROM accounts")
 rows = cursor.fetchall()
 for row in rows:
     pins.append(row[0])
 
+#Add data to balances
 column_balance = "balance"
 cursor.execute("SELECT " + column_balance + " FROM accounts")
 rows = cursor.fetchall()
 for row in rows:
     balances.append(row[0])
     
+#Function to create an account
 def create_account():
     name = input("Please enter your full name\n")
     while name.lower() in names:
@@ -64,6 +68,7 @@ def create_account():
     mydb.commit()
     print("Account successfully created.")
 
+#Function to sign in to an account
 def sign_in():
     while True:
         user_name = input("Please enter your name\n")
@@ -97,11 +102,12 @@ def sign_in():
     
         
         
-
+#Function to check the balance of an account
 def check_balance(name):
     name_index = names.index(name.lower())
     return round(balances[name_index],2)
 
+#Function to deposit money into an account
 def deposit(name):
     amount = float(input("Enter the amount you want to deposit\n"))
     name_index = names.index(name.lower())
@@ -115,6 +121,7 @@ def deposit(name):
     print("Deposit complete.")
     return round(amount,2)
 
+#Function to withdraw money from an account
 def withdrawal(name):
     amount = float(input("Enter the amount you want to withdraw\n"))
     name_index = names.index(name.lower())
@@ -132,6 +139,7 @@ def withdrawal(name):
         print("Withdrawal complete.")
     return round(balance,2)
 
+#Function to edit an account profile
 def edit_profile(name):
     choose = input("Enter 1 to change your name or 2 to change your PIN(-1 to exit)\n")
     if(choose == "-1"):
@@ -164,6 +172,7 @@ def edit_profile(name):
             print("PIN successfully updated.")
             break
 
+#Function to close an account
 def close_account(name):
     while True:
         name_index = names.index(name.lower())
@@ -190,7 +199,7 @@ def close_account(name):
 
     
     
-
+#Loop though functions until user exits
 print("Hello, welcome to the Banking District.")
 
 while True:
@@ -206,10 +215,6 @@ while True:
         print("Invalid input.")
 
     
-
-
-
-
 
 
 
