@@ -62,12 +62,36 @@ def create_account():
     
     data.append((name, pin, 0.0))
 
+    
+
+    
+
     insert_data_sql = """
     INSERT INTO accounts (name, pin, balance) VALUES (%s, %s, %s)
     """
     cursor.executemany(insert_data_sql, data)
     mydb.commit()
     print("Account successfully created.")
+
+    column_name = "name"
+    cursor.execute("SELECT " + column_name + " FROM accounts")
+    rows = cursor.fetchall()
+    for row in rows:
+        names.append(row[0].lower())
+
+    #Add data to pins
+    column_pin = "pin"
+    cursor.execute("SELECT " + column_pin + " FROM accounts")
+    rows = cursor.fetchall()
+    for row in rows:
+        pins.append(row[0])
+
+    #Add data to balances
+    column_balance = "balance"
+    cursor.execute("SELECT " + column_balance + " FROM accounts")
+    rows = cursor.fetchall()
+    for row in rows:
+        balances.append(row[0])
 
 #Function to sign in to an account
 def sign_in():
@@ -177,7 +201,7 @@ def edit_profile(name):
 def close_account(name):
     while True:
         name_index = names.index(name.lower())
-        pin_confirm = int(input("Enter your old pin to confirm\n"))
+        pin_confirm = int(input("Enter your pin to confirm\n"))
         if(pin_confirm == pins[name_index]):
             check = input("Are you sure you want to close your account(Y/N)\n")
             if(check.lower() == "y" or check.lower() == "yes"):
