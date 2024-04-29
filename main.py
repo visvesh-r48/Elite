@@ -1,4 +1,5 @@
 import mysql.connector
+import unittest
 
 #Connect to SQL
 mydb = mysql.connector.connect(host = "localhost", user = "root", password = "My$QLMy$QL1!", database = "bank")
@@ -195,8 +196,14 @@ def close_account(name):
             continue
 
 
-
-
+#UnitTest for function
+'''
+class TestCheckBalanceFunction(unittest.TestCase):
+    def test_check_balance(self):
+        self.assertEqual(check_balance("Bob Joe"), 209.71)
+if __name__ == '__main__':
+    unittest.main()
+'''
     
     
 #Loop though functions until user exits
@@ -215,6 +222,7 @@ while True:
         print("Invalid input.")
 
     
+
 
 
 
