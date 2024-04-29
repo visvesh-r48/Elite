@@ -156,6 +156,7 @@ def edit_profile(name):
         mydb.commit()
         names[name_index] = new_name.lower()
         print("Name successfully updated.")
+        exit()
     elif(choose == "2"):
         while True:
             name_index = names.index(name.lower())
@@ -173,7 +174,7 @@ def edit_profile(name):
             mydb.commit()
             pins[name_index] = new_pin
             print("PIN successfully updated.")
-            break
+            exit()
 
 #Function to close an account
 def close_account(name):
